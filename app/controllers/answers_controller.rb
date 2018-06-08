@@ -8,7 +8,9 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new
   end
 
-  def show; end
+  def show 
+
+  end
 
   def create
     @answer = @question.answers.create(answer_params)
