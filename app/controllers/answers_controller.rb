@@ -13,14 +13,16 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = @question.answers.create(answer_params)
+    @answer = @question.answers.new(answer_params)
     
     if @answer.save
-      redirect_to question_answer_path(id: @answer) #question_answer_path(id: @question)
+      redirect_to question_answer_path(id: @answer) 
     else
       render :new
     end
   end
+
+ 
 
   private
 
