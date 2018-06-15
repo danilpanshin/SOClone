@@ -1,7 +1,11 @@
 FactoryBot.define do
-  factory :answer do
+  # sequence :body do |n|
+  #   "MyText#{n}"
+  # end
+
+  factory :answer do     
     body "MyText"
-    
+    #question
   end
   factory :invalid_answer, class: "Answer" do
     body nil

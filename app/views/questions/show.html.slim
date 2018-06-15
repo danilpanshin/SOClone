@@ -3,6 +3,13 @@ table
   tr = @question.body
   = render @question.answers
 
-= link_to 'New Answer', new_question_answer_path(@question), class: 'btn'
-|  
+= form_for [@question, Answer.new] do |form|
+
+  p
+    = form.label :body
+    = form.text_field :body
+  p
+    = form.submit
+
+
 = link_to 'Questions', questions_path, class: 'btn'

@@ -34,9 +34,9 @@ RSpec.describe AnswersController, type: :controller do
       it 'saves the new answer in the database' do
         expect { post :create, params: { answer: attributes_for(:answer), question_id: question } }.to change(question.answers, :count).by(1)
       end
-      it 'redirects to show view' do
+      it 'redirects to question show view' do
         post :create, params: { answer: attributes_for(:answer), question_id: question }
-        expect(response).to redirect_to  action: :show, id: assigns(:answer).id #question_answer_path(assigns(:answer))  
+        expect(response).to redirect_to question_path(assigns(:question))  
       end
     end
 
