@@ -4,8 +4,9 @@ FactoryBot.define do
   # end
 
   factory :answer do     
-    body "MyText"
+    body "Answer"
     #question
+    user
   end
   factory :invalid_answer, class: "Answer" do
     body nil

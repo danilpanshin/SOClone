@@ -3,13 +3,8 @@ table
   tr = @question.body
   = render @question.answers
 
-= form_for [@question, Answer.new] do |form|
-
-  p
-    = form.label :body
-    = form.text_field :body
-  p
-    = form.submit
+- if user_signed_in?
+      = render 'answers/form', question: @question, answer: @answer
 
 
 = link_to 'Questions', questions_path, class: 'btn'
