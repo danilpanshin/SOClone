@@ -5,27 +5,26 @@ feature 'Write an answer', %q{
   answer to the question
 } do 
   
-  given(:user) { create(:user) }
-  
+  given!(:user) { create(:user) } 
+  given!(:question) { create(:question) } 
 
   scenario 'Authenticated user trie to write an answer' do
     sign_in(user)
-    question = create(:question)
-    
-    visit "/questions"
+    visit questions_path
+    expect(page).to have_content question.title
+    expect(page).to have_content question.body
     click_on 'Show'
     fill_in 'Body', with: 'test_body_answer'
     click_on 'Create Answer'
-
+    expect(page).to have_content 'Your answer successfully created.'
     expect(page).to have_content 'test_body_answer'
   end
 
-  scenario 'Non-authenticated user tries to write an answer' do 
-    
+  scenario 'Non-authenticated user tries to write an answer' do    
     visit questions_path    
-    click_on 'Ask question'
-    
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to have_content question.title
+    expect(page).to have_content question.body
+    click_on 'Show'   
+    expect(page).to_not have_link 'Create Answer'
   end
-
 end

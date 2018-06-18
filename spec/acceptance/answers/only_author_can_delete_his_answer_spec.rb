@@ -28,4 +28,12 @@ feature 'Only author can delete his question or answer', %q{
     expect(current_path).to eq question_path(question)
     expect(page).to_not have_link 'Delete'
   end
+
+  scenario 'Non-registered user tries to delete answer' do
+    visit questions_path
+    click_on 'Show'
+    expect(current_path).to eq question_path(question)
+    expect(page).to have_content answer.body
+    expect(page).to_not have_link 'Delete'
+  end
 end

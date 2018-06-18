@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
-
   let(:question) { create(:question, user: user) }
 
   describe 'GET #index' do
@@ -34,7 +33,6 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #new' do
     sign_in_user
-
     before { get :new }
 
     it 'assigns a new Question to @question' do
@@ -48,7 +46,6 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #edit' do
     sign_in_user
-
     before { get :edit, params: { id: question } }
 
     it 'assigns the requested question to @question' do
@@ -85,17 +82,32 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
    describe 'DELETE #destroy' do
-    sign_in_user
-    let(:question) { create(:question, user: @user) }
+    before { sign_in(user) }
     before { question }
 
-    it 'deletes question' do
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+    context 'User deletes his own answer' do
+      it 'deletes question' do
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to index view' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirect to index view' do
-      delete :destroy, params: { id: question }
-      expect(response).to redirect_to questions_path
+    context 'User trying deletes another user`s question' do
+      let!(:some_other_user) { create(:user) }
+      let!(:some_other_question) { create(:question, user: some_other_user) }
+
+      it 'does not deletes question' do
+        expect { delete :destroy, params: { id: some_other_question} }.to_not change(Question, :count)
+      end
+
+      it 'redirect to questions view' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
     end
   end
 

@@ -1,5 +1,4 @@
 class QuestionsController < ApplicationController
-
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: [:show, :edit, :destroy]
 
@@ -20,8 +19,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-    
+    @question = current_user.questions.new(question_params)    
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
     else
@@ -29,15 +27,13 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def destroy
-    
+  def destroy    
     if current_user.author?(@question)
       @question.destroy
       redirect_to questions_path, notice: 'The question was deleted.'
     else
       redirect_to questions_path, notice: 'Cant delete.'
-    end
-    
+    end    
   end
 
   private
@@ -49,7 +45,4 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title, :body)
   end
-
-
-
 end

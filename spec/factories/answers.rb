@@ -1,7 +1,7 @@
 FactoryBot.define do
-  # sequence :body do |n|
-  #   "MyText#{n}"
-  # end
+  sequence :body do |n|
+    "MyText#{n}"
+  end
 
   factory :answer do     
     body "Answer"

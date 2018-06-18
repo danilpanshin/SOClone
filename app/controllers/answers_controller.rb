@@ -1,40 +1,27 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[show]
-  before_action :set_question, only: %i[new create]
-  before_action :set_answer, only: %i[show destroy]
-
-  
-  def new
-    @answer = @question.answers.new
-  end
-
-  def show 
-
-  end
+  before_action :authenticate_user!
+  before_action :set_question, only: %i[create]
+  before_action :set_answer, only: %i[destroy] 
 
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     
     if @answer.save
-      redirect_to question_path(id: @question), notice: 'Your answer successfully created.' 
+      redirect_to @question, notice: 'Your answer successfully created.' 
     else
       render :new
     end
   end
 
-  def destroy
-    
+  def destroy    
     if current_user.author?(@answer)
       @answer.destroy
       redirect_to question_path(@answer.question) , notice: 'The answer was deleted.'
     else
       redirect_to questions_path, notice: "Can't delete."
-    end
-    
+    end    
   end
-
- 
 
   private
 
@@ -49,5 +36,4 @@ class AnswersController < ApplicationController
   def answer_params
     params.require(:answer).permit(:body)
   end
-
 end
