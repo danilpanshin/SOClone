@@ -8,13 +8,11 @@ feature 'Watch list of question', %q{
   given!(:questions) { create_list(:question, 3) }
 
   scenario 'Registered user try to view' do
-    sign_in(user)
-    
+    sign_in(user)    
     view_questions
   end
 
-  scenario 'Unregistered user try to view' do
-    
+  scenario 'Unregistered user try to view' do    
     view_questions
   end
 end

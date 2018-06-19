@@ -11,17 +11,27 @@ RSpec.describe User do
     it { should validate_presence_of :password }
   end
 
-  context 'author?' do
+  describe '#author?' do
     let!(:user) { create(:user) }
     let!(:question) { create(:question, user: user) }
     let!(:some_other_user) { create(:user) }
 
+    # it 'should return true if current user associates with question' do
+    #   expect(user).to be_author?(question)
+    # end
+
+    # it 'should return false if current user does not associates with question' do
+    #   expect(some_other_user).to_not be_author?(question)
+    # end
+
     it 'should return true if current user associates with question' do
-      expect(user.id).to eq question.user_id
+      subject = user.author?(question)
+      expect(subject).to be true
     end
 
     it 'should return false if current user does not associates with question' do
-      expect(some_other_user.id).to_not eq question.user_id
+      subject = some_other_user.author?(question)
+      expect(subject).to be false
     end
-  end
+  end  
 end

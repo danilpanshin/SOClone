@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'Only author can delete his question or answer', %q{
-  The author of question or answer can delete
-  his question or answer but can't delete
-  question or answer of another author
+feature 'Only author can delete his answer', %q{
+  The author of answer can delete
+  his answer but can't delete
+  answer of another author
 } do 
 
   given!(:user) { create(:user) }

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'Only author can delete his question or answer', %q{
-  The author of question or answer can delete
-  his question or answer but can't delete
-  question or answer of another author
+feature 'Only author can delete his question', %q{
+  The author of question can delete
+  his question but can't delete
+  question of another author
 } do 
 
   given(:user) { create(:user) }
@@ -26,7 +26,10 @@ feature 'Only author can delete his question or answer', %q{
     expect(page).to have_content question.title
     expect(page).to_not have_link 'Delete'
   end
-  
 
-
+  scenario 'Guest tries to delete question' do
+    visit questions_path
+    expect(page).to have_content question.title
+    expect(page).to_not have_link 'Delete'
+  end
 end
