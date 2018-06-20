@@ -16,22 +16,12 @@ RSpec.describe User do
     let!(:question) { create(:question, user: user) }
     let!(:some_other_user) { create(:user) }
 
-    # it 'should return true if current user associates with question' do
-    #   expect(user).to be_author?(question)
-    # end
-
-    # it 'should return false if current user does not associates with question' do
-    #   expect(some_other_user).to_not be_author?(question)
-    # end
-
     it 'should return true if current user associates with question' do
-      subject = user.author?(question)
-      expect(subject).to be true
+      expect(user).to be_author(question)
     end
 
     it 'should return false if current user does not associates with question' do
-      subject = some_other_user.author?(question)
-      expect(subject).to be false
+      expect(some_other_user).to_not be_author(question)
     end
   end  
 end
