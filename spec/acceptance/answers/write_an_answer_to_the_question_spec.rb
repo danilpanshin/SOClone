@@ -8,13 +8,12 @@ feature 'Write an answer', %q{
   given!(:user) { create(:user) } 
   given!(:question) { create(:question) } 
 
-  scenario 'Authenticated user tries to write an answer' do
+  scenario 'Authenticated user tries to write an answer', js: true do
     sign_in(user)
     visit questions_path    
     click_on 'Show'
     fill_in 'Body', with: 'test_body_answer'
     click_on 'Create Answer'
-    expect(page).to have_content 'Your answer successfully created.'
     expect(page).to have_content 'test_body_answer'
   end
 
@@ -26,7 +25,7 @@ feature 'Write an answer', %q{
     expect(page).to_not have_link 'Create Answer'
   end
 
-  scenario 'Authenticated user tries to create answer without attributes' do
+  scenario 'Authenticated user tries to create answer without attributes', js: true do
     sign_in(user)
     visit questions_path    
     click_on 'Show'

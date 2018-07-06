@@ -2,23 +2,12 @@ table
   tr = @question.title
   tr = @question.body
 
-
-ul.answers
-  - @question.answers.each do |a|
-    - if a.persisted?
-        li
-          p= a.body
-          - if current_user&.author?(a)
-              p= link_to 'Delete',
-                         question_answer_path(a.question, a),
-                         method: :delete,
-                         data: { confirm: 'Are you sure?' }
-
-
+.answers
+  = render @question.answers 
   
 - if user_signed_in?
-  = render 'shared/errors', resource: @answer
-  = form_for [@question, @answer] do |f|
+  .errors
+  = form_for [@question, @answer], remote:true do |f|
     p= f.label :body
     p= f.text_area :body
     p= f.submit 'Create Answer' 
